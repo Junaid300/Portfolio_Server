@@ -12,17 +12,20 @@ check('password',"Password is too short").isLength({min:8})
     const error = validationResult(req)
     if(!error.isEmpty())
     {
+        
         return res.status(500).json({error:error.array()})
     }
     const {name,email,password}=req.body
-    console.log(name,email,password)
+    
    try {
     let user = await User.findOne({email})
-    console.log(user);
+    
    
     if(user)
     {
-        return res.status(500).json({error:["user already exit"]})
+        console.log("Already Register");
+        
+        return res.status(401).json({error:["user already exit"]})
     }
     const newUser = new User({
         name,email,password
@@ -30,7 +33,7 @@ check('password',"Password is too short").isLength({min:8})
 
     const salt =await bcrypt.genSalt(10);
     newUser.password =await bcrypt.hash(password,salt)
-    console.log(newUser.password)
+    
   await newUser.save()
   const paylaod = {
       user:{
@@ -42,13 +45,14 @@ check('password',"Password is too short").isLength({min:8})
   (err,token)=>{
       if(err) throw err
       console.log(token)
-      res.json(token)
-  }
+        res.status(200).json(token)
+    }
   )
   
 }
     catch(error)
     {
+      
         res.status(401).json("Server Error")
         console.log(error.message)
     }

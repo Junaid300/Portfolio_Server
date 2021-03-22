@@ -1,6 +1,8 @@
 const express = require('express')
 const app = express()
+var cors = require('cors')
 app.use(express.json({extended:false }))
+app.use(cors())
 const connectDb = require('./config/connection')
 
 connectDb()
