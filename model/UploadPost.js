@@ -31,6 +31,9 @@ const UploadPost = mongoose.Schema({
         type: mongoose.Schema.Types.ObjectId,
         ref: 'UserRegistration',
       },
+      name: {
+        type: String,
+      },
     },
   ],
   comments: [
@@ -42,6 +45,9 @@ const UploadPost = mongoose.Schema({
       text: {
         type: String,
         required: true,
+      },
+      name: {
+        type: String,
       },
     },
   ],
