@@ -58,7 +58,7 @@ check('password',"Password Required").not().isEmpty()
   (err,token)=>{
       if(err) throw err
       console.log(token)
-      res.json(user)
+      res.status(200).json([user,token])
   }
   )
   
